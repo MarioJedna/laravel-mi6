@@ -3,8 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TestEmail;
 use App\Models\Person;
+use App\Models\User;
+use App\Notifications\TestNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Auth;
+use Illuminate\Notifications\Notification as NotificationsNotification;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
+use Illuminate\Support\Testing\Fakes\NotificationFake;
 
 class PersonController extends Controller
 {
@@ -41,5 +49,19 @@ class PersonController extends Controller
             ->get();
 
         return compact('people', 'total', 'last_page');
+    }
+
+    public function sendTestEmail()
+    {
+        $temp_var = "Hello random guy";
+        MAIL::to('test@test.com')->send(new TestEmail($temp_var));
+    }
+
+    public function sendTestNotification()
+    {
+
+        $user = User::get();
+        // $user->notify(new TestNotification('hi'));
+        FacadesNotification::send($user, new TestNotification('hi'));
     }
 }

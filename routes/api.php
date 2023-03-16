@@ -28,3 +28,12 @@ Route::get('/statuses', [StatusController::class, 'index'])->name('api.statuses'
 Route::get('/missions', [MissionController::class, 'index'])->name('api.missions');
 Route::get('/missions/{mission_id}', [MissionController::class, 'show'])->name('api.missions.show');
 Route::post('/missions/store', [MissionController::class, 'store'])->name('api.missions.store');
+
+//send test email
+Route::get('/send-test-email', [PersonController::class, 'sendTestEmail']);
+
+//send email with person details
+Route::get('/send-mission/{mission_id}', [MissionController::class, 'sendMissionEmail'])->name('email.mission');
+
+//
+Route::get('/send-test-notification', [PersonController::class, 'sendTestNotification']);
